@@ -29,7 +29,7 @@ To run the frontend, follow the steps below:
 
 Create and manage tasks to your liking.
 
-- PT-BR
+# PT-BR
 
 # To Do List
 - Utilizando Angular 17, TypeScript em Node.js, Express e Sequelize
