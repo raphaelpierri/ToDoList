@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="card text-center" style="width: 75%">
+    <div
+      class="card-header font-weight-bold border border-dark text-white bg-dark"
+    >
+      <h4>Gerenciamento de Tarefas</h4>
+    </div>
+    <div class="card-body border border-dark">
+      <h6 class="card-title">
+        Aqui você pode visualizar adicionar, editar e deletar tarefas
+      </h6>
+      <angular2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (create)="onAdd()"
+      >
+        ></angular2-smart-table
+      >
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura total da viewport */
+ }
+ .card { /* Cor de fundo do card */
+  box-shadow: 0 0 8px 1px, 4px 4px 8px 1px;
+}
+

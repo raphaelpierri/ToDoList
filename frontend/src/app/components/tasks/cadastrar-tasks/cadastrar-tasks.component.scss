@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura total da viewport */
+ }
+
+ .btn-outline-success {
+  margin-left: 5px;
+ }
+
+  .invalid {
+  color: white;
+  background-color: rgb(253, 105, 105);
+
+ }
+
+ .card { /* Cor de fundo do card */
+  box-shadow: 0 0 8px 1px, 4px 4px 8px 1px;
+}
+

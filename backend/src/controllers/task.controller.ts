@@ -1,3 +1,4 @@
+import { ValidationError } from "sequelize";
 import taskModel from "../models/task.model";
 import {Request, Response} from 'express'
 
@@ -14,6 +15,10 @@ const getTaskById = async (req: Request, res: Response) => {
 }
 
 const createTask = async (req: Request, res: Response) => {
+    const {descricao, status} = req.body;
+    if (!descricao || !status) {
+        throw new Error('Descrição e status são obrigatórios')
+    }
     await taskModel.create(req.body)
     return res.status(201).json({message: req.body})
 }
