@@ -10,7 +10,7 @@ Primeiro, clone este repositório.
 
 Para rodar o backend, siga os passos abaixo:
 
-1. Entre na pasta do backend;
+1. Entre na pasta backend;
 
 2. Instale as dependências utilizando npm install ou algo similar
 
@@ -20,7 +20,7 @@ Para rodar o backend, siga os passos abaixo:
 
 Para rodar o frontend, siga os passos abaixo:
 
-1. Entre na pasta do frontend;
+1. Entre na pasta frontend;
 
 2. Instale as dependências utilizando npm install ou algo similar
 
