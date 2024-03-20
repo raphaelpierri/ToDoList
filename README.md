@@ -1,5 +1,5 @@
 # To Do List
-- Utilizando Angular 17 e TypeScript em Node.js
+- Utilizando Angular 17, TypeScript em Node.js, Express e Sequelize
 Gerencie tarefas à sua escolha.
 
 ## Instalação
