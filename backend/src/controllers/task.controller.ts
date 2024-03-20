@@ -15,18 +15,43 @@ const getTaskById = async (req: Request, res: Response) => {
 }
 
 const createTask = async (req: Request, res: Response) => {
-    const {descricao, status} = req.body;
-    if (!descricao || !status) {
-        throw new Error('Descrição e status são obrigatórios')
+    try {
+        const {descricao, status} = req.body;
+        if (!descricao || !status) {
+            throw new Error('Descrição e status são obrigatórios')
+        }
+        const tasks = await taskModel.findAll()
+        for (const task of tasks) {
+            if (task.descricao === descricao) {
+                throw new Error('Já existe uma tarefa com essa descrição')
+            }
+        }
+        await taskModel.create(req.body)
+        return res.status(201).json({message: req.body})
+    } catch(error) {
+        console.error(error)
+        return res.status(400).send((error as Error).message)
     }
-    await taskModel.create(req.body)
-    return res.status(201).json({message: req.body})
+
 }
 
 const updateTask = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const taskUpdated = await taskModel.update(id, req.body)
-    return res.status(201).json(taskUpdated)
+    try {
+        const id = parseInt(req.params.id);
+        const task = await taskModel.findById(id)
+        const tasks = await taskModel.findAll()
+        for (const task of tasks) {
+            if (task.descricao === task.descricao) {
+                throw new Error('Já existe uma tarefa com essa descrição')
+            }
+        }
+        const taskUpdated = await taskModel.update(id, req.body)
+        return res.status(201).json(taskUpdated)
+    } catch(error) {
+        console.error(error)
+        return res.status(400).send((error as Error).message)
+    }
+
 }
 
 const deleteTask = async (req: Request, res: Response) => {

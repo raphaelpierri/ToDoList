@@ -19,3 +19,12 @@
   box-shadow: 0 0 8px 1px, 4px 4px 8px 1px;
 }
 
+.card-header {
+  background: rgb(0,36,21) !important;
+  background: linear-gradient(90deg, rgba(0,36,21,1) 0%, rgba(17,121,9,0.9416141456582633) 35%, rgba(0,212,255,1) 100%) !important;
+}
+
+.card-header h4 {
+  text-align: center;
+}
+

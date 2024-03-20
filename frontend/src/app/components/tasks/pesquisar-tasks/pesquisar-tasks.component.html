@@ -13,6 +13,8 @@
         [settings]="settings"
         [source]="source"
         (create)="onAdd()"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
       >
         ></angular2-smart-table
       >

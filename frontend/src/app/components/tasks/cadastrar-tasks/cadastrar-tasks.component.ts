@@ -3,15 +3,25 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModu
 import { TasksService } from '../../../services/tasks.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { StatusOption } from '../../../enums/status.enum';
+import { FadeIn } from '../../../util/animations';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-cadastrar-tasks',
   standalone: true,
   imports: [ReactiveFormsModule, ToastrModule],
   templateUrl: './cadastrar-tasks.component.html',
-  styleUrl: './cadastrar-tasks.component.scss'
+  styleUrl: './cadastrar-tasks.component.scss',
+  animations: [FadeIn(500, true)]
 })
 export class CadastrarTasksComponent implements OnInit{
+
+statusOptions: StatusOption[] = [
+    {title: 'Pendente', value: 'PENDENTE'},
+    {title: 'Em Andamento', value: 'ANDAMENTO'},
+    {title: 'Concluído', value: 'CONCLUIDO'},
+  ]
 formCadastro!: FormGroup;
 isFormSubmitted: boolean = false
 
@@ -48,12 +58,18 @@ get f(): { [key: string]: AbstractControl } {
       return
     }
     const values = this.formCadastro.value
+
       this.tasksService.createTask(values)
+      .pipe(
+        catchError((err) => {
+          this.toastr.warning('Não foi possível cadastrar a tarefa', err.error);
+          return of();
+        })
+      )
       .subscribe((resp) => {
         this.toastr.success('Tarefa adicionada com sucesso!', 'Sucesso');
         this.router.navigate(['../'], {relativeTo: this.route})
       });
   }
-
 
 }

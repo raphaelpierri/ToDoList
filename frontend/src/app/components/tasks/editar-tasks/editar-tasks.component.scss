@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura total da viewport */
+ }
+
+ .btn-outline-success {
+  margin-left: 5px;
+ }
+
+  .invalid {
+  color: white;
+  background-color: rgb(253, 105, 105);
+
+ }
+
+ .card { /* Cor de fundo do card */
+  box-shadow: 0 0 8px 1px, 4px 4px 8px 1px;
+}
+
+.card-header {
+  background: rgb(35,36,0) !important;
+  background: linear-gradient(90deg, rgba(35,36,0,0.9023984593837535) 0%, rgba(98,121,9,0.8631827731092436) 41%, rgba(0,212,255,1) 100%) !important;
+}
+
+.card-header h4 {
+  text-align: center;
+}

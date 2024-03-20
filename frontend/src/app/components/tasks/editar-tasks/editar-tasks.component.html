@@ -1,1 +1,66 @@
-<p>editar-tasks works!</p>
+<div class="container">
+  <div class="card" style="width: 75%">
+    <form [formGroup]="formCadastro">
+      <div
+        class="card-header font-weight-bold border border-dark text-white bg-dark"
+      >
+        <h4 class="align-middle">Editar Tarefa</h4>
+      </div>
+      <div class="card-body border border-dark">
+        <div class="form-group text-start mb-3">
+          <label>Descrição</label>
+          <input
+            type="descricao"
+            class="form-control"
+            formControlName="descricao"
+            id="descricao"
+            placeholder="digite uma tarefa..."
+          />
+          @if (isFormSubmitted && f['descricao'].errors) {
+          <div>
+            @if (f['descricao'].errors['required']) {
+            <div class="invalid text-center">Campo obrigatório</div>
+            }
+          </div>
+          }
+        </div>
+        <div class="form-group text-start">
+          <label>Status</label>
+          <select class="form-control" formControlName="status">
+            <option [ngValue]="null" disabled>Selecione</option>
+            @for (status of statusOptions;track status.value) {
+            <option [value]="status.value">
+              {{ status.title }}
+            </option>
+            }
+          </select>
+          @if (isFormSubmitted && f['status'].errors) {
+          <div>
+            @if (f['status'].errors['required']) {
+            <div class="invalid text-center">Campo obrigatório</div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="card-footer border border-dark bg-light">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="onVoltar()"
+          title="Voltar"
+        >
+          <i class="bi bi-skip-backward-fill"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success ml-1"
+          (click)="onSalvar()"
+          title="Voltar"
+        >
+          Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

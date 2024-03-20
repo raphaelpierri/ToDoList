@@ -25,14 +25,15 @@
           }
         </div>
         <div class="form-group text-start">
-          <label>Descrição</label>
-          <input
-            type="status"
-            class="form-control"
-            formControlName="status"
-            id="status"
-            placeholder="dê uma descrição a sua tarefa..."
-          />
+          <label>Status</label>
+          <select class="form-control" formControlName="status">
+            <option [ngValue]="null" disabled>Selecione</option>
+            @for (status of statusOptions;track status.value) {
+            <option [value]="status.value">
+              {{ status.title }}
+            </option>
+            }
+          </select>
           @if (isFormSubmitted && f['status'].errors) {
           <div>
             @if (f['status'].errors['required']) {

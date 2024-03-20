@@ -1,48 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Angular2SmartTableModule, LocalDataSource, Settings } from 'angular2-smart-table';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TasksService } from '../../../services/tasks.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { StatusOption } from '../../../enums/status.enum';
+import { FadeIn } from '../../../util/animations';
 
 @Component({
   selector: 'app-pesquisar-tasks',
   standalone: true,
-  imports: [Angular2SmartTableModule, BsDropdownModule, TooltipModule, ModalModule],
+  imports: [Angular2SmartTableModule, BsDropdownModule, TooltipModule, ModalModule, ToastrModule],
   templateUrl: './pesquisar-tasks.component.html',
-  styleUrl: './pesquisar-tasks.component.scss'
+  styleUrl: './pesquisar-tasks.component.scss',
+  animations: [FadeIn(500, true)]
 })
-export class PesquisarTasksComponent {
 
-  source: LocalDataSource;
-  data: any[] = [
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
-    {id: 1, descricao: 'Teste', status: 'Pendente'},
+
+export class PesquisarTasksComponent implements OnInit{
+
+  source!: LocalDataSource;
+  statusOptions: StatusOption[] = [
+    {title: 'Pendente', value: 'PENDENTE'},
+    {title: 'Em Andamento', value: 'ANDAMENTO'},
+    {title: 'Concluído', value: 'CONCLUIDO'},
   ]
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-    this.source = new LocalDataSource(this.data)
+    private tasksService: TasksService,
+    private toastrService: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.tasksService.findAllTasks().subscribe((resp) => {
+      this.source = resp})
   }
 
   settings: Settings = {
@@ -63,10 +58,24 @@ export class PesquisarTasksComponent {
       },
       descricao: {
         title: 'Descrição',
-        width: '50%'
+        width: '50%',
+        filter: {
+          type: 'text',
+        },
       },
       status: {
-        title: 'Status'
+        title: 'Status',
+        ...this.listFilter(this.statusOptions),
+        valuePrepareFunction: (value) => {
+          if (value === 'PENDENTE') {
+            return 'Pendente'
+          }
+          if (value === 'CONCLUIDO') {
+            return 'Concluído'
+          }
+          return 'Em Andamento'
+        },
+
       },
     },
       add: {
@@ -79,6 +88,23 @@ export class PesquisarTasksComponent {
         deleteButtonContent: this.createRowActionDeleteContent('Excluir', ''),
       },
   };
+
+  listFilter(
+    listElements: { value: any; title: any }[],
+    selectText = 'Selecionar',
+    strictSearch = false
+  ): any {
+    const filter = {
+      type: 'list',
+      config: {
+        selectText: selectText,
+        list: strictSearch
+          ? listElements.map((item) => ({ value: `$${item.value}`, title: item.title }))
+          : listElements,
+      },
+    };
+    return { filter };
+  }
 
   createActionCreateContent(title: string, cssClass: string): string {
     return `<span class="btn btn-success ${cssClass}" title="${title}"><i class="bi bi-plus"></i></span>`;
@@ -98,6 +124,21 @@ export class PesquisarTasksComponent {
 
   onAdd() {
     this.router.navigate(['cadastrar'], { relativeTo: this.route });
+  }
+
+  onEdit(event: any) {
+    const { id } = event.data
+     this.router.navigate(['editar/', id], { relativeTo: this.route });
+  }
+
+  onDelete(event: any) {
+    const { id } = event.data
+    this.tasksService.deleteTask(id).subscribe(() => {
+      this.tasksService.findAllTasks().subscribe((resp) => {
+        this.source = new LocalDataSource(resp);
+      });
+      this.toastrService.success('Tarefa excluída com sucesso!', 'Sucesso')
+    })
   }
 
 }
