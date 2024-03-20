@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { environment } from '../../../enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-  configUrl = 'http://localhost:3333';
+  configUrl = environment.API_URL;
 
   getTask(id: number) {
     return this.http.get<any>(`${this.configUrl}/tasks/${id}`);

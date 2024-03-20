@@ -38,10 +38,10 @@ const createTask = async (req: Request, res: Response) => {
 const updateTask = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const task = await taskModel.findById(id)
         const tasks = await taskModel.findAll()
+        const newDesc = req.body.descricao
         for (const task of tasks) {
-            if (task.descricao === task.descricao) {
+            if (task.descricao === newDesc) {
                 throw new Error('Já existe uma tarefa com essa descrição')
             }
         }
