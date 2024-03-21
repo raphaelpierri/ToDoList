@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Angular2SmartTableModule, LocalDataSource, Settings } from 'angular2-smart-table';
+import { Angular2SmartTableModule, LocalDataSource, Row, Settings } from 'angular2-smart-table';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -51,14 +51,25 @@ export class PesquisarTasksComponent implements OnInit{
       position: 'right',
       add: true
     },
+    rowClassFunction: (row: Row) => {
+      console.log(row)
+      const data = row.getData();
+      if(data.status === 'PENDENTE'){
+        return 'cor-pendente';
+      }
+      if(data.status === 'CONCLUIDO'){
+        return 'cor-concluido';
+      }
+        return 'cor-andamento';
+  },
     columns: {
-      id: {
+/*       id: {
         title: 'ID',
         width: '10%'
-      },
+      }, */
       descricao: {
         title: 'Descrição',
-        width: '50%',
+        width: '60%',
         filter: {
           type: 'text',
         },
@@ -75,7 +86,6 @@ export class PesquisarTasksComponent implements OnInit{
           }
           return 'Em Andamento'
         },
-
       },
     },
       add: {

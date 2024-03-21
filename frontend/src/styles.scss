@@ -39,3 +39,18 @@ body {
  ::view-transition-old(count) {
   animation-name: -ua-view-transition-fade-out, rotate-out;
  }
+
+  .cor-pendente td:nth-child(2) div {
+  background-color: red;
+  color: white
+  }
+
+  .cor-andamento td:nth-child(2) div {
+  background-color: orange;
+  color: white
+  }
+
+  .cor-concluido td:nth-child(2) div {
+  background-color: rgb(16, 146, 16);
+  color: white
+  }
