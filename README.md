@@ -3,9 +3,7 @@
 
 Manage tasks of your choice.
 
-<p align="center">
 ![as-ezgif com-video-to-gif-converter (1)](https://github.com/raphaelpierri/ToDoList/assets/112671849/4de3b880-73ec-4066-8cd5-1eeef6b770cd)
-</p>
 
 
 ## Installation
