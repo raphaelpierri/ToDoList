@@ -22,7 +22,7 @@ To run the frontend, follow the steps below:
 
 1. Enter the frontend folder;
 2. Install dependencies using npm install or something similar;
-3. Update the configUrl located in tasks.service.ts according to the URL and port you configured in your .env file in the backend;
+3. Update the enviroment.ts according to the URL you configured in your .env file in the backend;
 4. Start the server using npm start or something similar.
 
 ## Usage
@@ -59,7 +59,7 @@ Para rodar o frontend, siga os passos abaixo:
 
 2. Instale as dependências utilizando npm install ou algo similar
 
-3. Atualize o configUrl localizado no tasks.service.ts de acordo com a url e porta que você configurou em seu arquivo .env no backend
+3. Atualize o arquivo enviroment.ts de acordo com a url que você configurou em seu arquivo .env no backend
   
 4. Inicie o servidor utilizando npm start ou algo similar
 
